@@ -1,1 +1,16 @@
-
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+export async function getStaticPaths() {
+  const products = await getCollection('products');
+  return products.map(p => ({ params: { slug: p.slug }, props: { p } }));
+}
+const { p } = Astro.props;
+const { Content } = await p.render();
+---
+<Layout title={p.data.title}>
+  <main class='max-w-4xl mx-auto px-4 py-20'>
+    <h1 class='text-4xl font-bold'>{p.data.title}</h1>
+    <div class='glass p-8 mt-8'><Content /></div>
+  </main>
+</Layout>
