@@ -1,0 +1,19 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+const featuredProducts = await getCollection('products', ({ data }) => data.featured);
+---
+<Layout title="AutoStore">
+  <main class="max-w-7xl mx-auto px-4 py-20 text-center">
+    <h1 class="text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-600 mb-8">Future of Digital Commerce</h1>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
+      {featuredProducts.map(p => (
+        <a href={`/products/${p.slug}`} class="glass p-8 block hover:border-indigo-500 transition-all">
+          <div class="text-4xl mb-4">{p.data.icon}</div>
+          <h3 class="text-xl font-bold">{p.data.title}</h3>
+          <p class="text-slate-400 mt-2">${p.data.price}</p>
+        </a>
+      ))}
+    </div>
+  </main>
+</Layout>
